@@ -17,7 +17,7 @@ def minOperations(n):
     num_hs = 2
     paste_count = 1
     operations = 2
- 
+
     while (num_hs < n):
         if (n - num_hs) % num_hs != 0:
             num_hs += paste_count

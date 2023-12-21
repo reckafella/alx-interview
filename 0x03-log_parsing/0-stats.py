@@ -28,9 +28,9 @@ def parse_line(line: str, regx: re.Pattern[str], log_dict: dict) -> dict:
 
     if match:
         status_code, file_size = match.group(1, 2)
-        
+
         log_dict['file_size'] += int(file_size)
-        
+
         if status_code.isdecimal():
             log_dict['status_codes'][status_code] += 1
 
@@ -49,20 +49,20 @@ def print_result(log_dict: dict) -> None:
         if log_dict['status_codes'][status_code]:
             print(f"{status_code}: {log_dict['status_codes'][status_code]}")
 
+
 def execute():
-    #ip = '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
-    #date = '\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\]'
-    #get = '"GET /projects/260 HTTP/1.1"'
+    '''
+    execute the program
+    '''
     regx = re.compile(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET /projects/260 HTTP/1.1" (.{3}) (\d+)')
-    # regx = re.compile(r'{} - {} {} (.{3}) (\d+)'.format(ip, date, get))
 
     log_dict: dict = create_log_dict()
-    
+
     line_count: int = 0
 
     for line in sys.stdin:
         line = line.strip()
-        
+
         line_count = line_count + 1
 
         parsed_dict: dict = parse_line(line, regx, log_dict)
@@ -71,7 +71,8 @@ def execute():
             if line_count % 10 == 0:
                 print_result(parsed_dict)
         except KeyboardInterrupt:
-            print_result(parsed_dict)
-        
+            pass
+
+
 if __name__ == '__main__':
     execute()

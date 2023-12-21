@@ -6,7 +6,7 @@ import re
 import sys
 
 
-def create_log_dict() -> dict:
+def create_log_dict():
     '''
     create an initial dict of file size and status codes
     '''
@@ -20,7 +20,7 @@ def create_log_dict() -> dict:
     return log_dict
 
 
-def parse_line(line: str, regx: re.Pattern[str], log_dict: dict) -> dict:
+def parse_line(line, regx, log_dict):
     '''
     parses a single line to increment file_size and status_codes
     '''
@@ -37,42 +37,42 @@ def parse_line(line: str, regx: re.Pattern[str], log_dict: dict) -> dict:
     return log_dict
 
 
-def print_result(log_dict: dict) -> None:
+def print_result(log_dict):
     '''
     handles the printing of file_size and status_codes
     '''
     print('File size: {}'.format(log_dict['file_size']))
 
-    sorted_codes: list = sorted(log_dict['status_codes'])
+    sorted_codes = sorted(log_dict['status_codes'])
 
     for status_code in sorted_codes:
         if log_dict['status_codes'][status_code]:
             print(f"{status_code}: {log_dict['status_codes'][status_code]}")
 
 
-def execute():
+def main():
     '''
     execute the program
     '''
     regx = re.compile(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET /projects/260 HTTP/1.1" (.{3}) (\d+)')
 
-    log_dict: dict = create_log_dict()
+    log_dict = create_log_dict()
 
-    line_count: int = 0
+    line_count = 0
 
     for line in sys.stdin:
         line = line.strip()
 
         line_count = line_count + 1
 
-        parsed_dict: dict = parse_line(line, regx, log_dict)
+        parsed_dict = parse_line(line, regx, log_dict)
 
         try:
             if line_count % 10 == 0:
                 print_result(parsed_dict)
         except KeyboardInterrupt:
-            pass
+            print_result(parsed_dict)
 
 
 if __name__ == '__main__':
-    execute()
+    main()

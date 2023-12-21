@@ -1,15 +1,11 @@
 #!/usr/bin/python3
-'''
-log parsing module code
-'''
+''' log parsing module code '''
 import re
 import sys
 
 
 def create_log_dict():
-    '''
-    create an initial dict of file size and status codes
-    '''
+    ''' create an initial dict of file size and status codes '''
     status_codes: list = [200, 301, 400, 401, 403, 404, 405, 500]
 
     log_dict: dict = {
@@ -21,9 +17,7 @@ def create_log_dict():
 
 
 def parse_line(line, regx, log_dict):
-    '''
-    parses a single line to increment file_size and status_codes
-    '''
+    ''' parses a single line to increment file_size and status_codes '''
     match = regx.fullmatch(line)
 
     if match:
@@ -38,9 +32,7 @@ def parse_line(line, regx, log_dict):
 
 
 def print_result(log_dict):
-    '''
-    handles the printing of file_size and status_codes
-    '''
+    ''' handles the printing of file_size and status_codes '''
     print('File size: {}'.format(log_dict['file_size']))
 
     sorted_codes = sorted(log_dict['status_codes'])
@@ -51,9 +43,7 @@ def print_result(log_dict):
 
 
 def main():
-    '''
-    execute the program
-    '''
+    ''' execute the program '''
     regx = re.compile(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET /projects/260 HTTP/1.1" (.{3}) (\d+)')
 
     log_dict = create_log_dict()

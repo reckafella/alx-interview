@@ -50,18 +50,19 @@ def main():
 
     line_count = 0
 
-    for line in sys.stdin:
-        line = line.strip()
+    try:
+        for line in sys.stdin:
+            line = line.strip()
 
-        line_count = line_count + 1
+            line_count = line_count + 1
 
-        parsed_dict = parse_line(line, regx, log_dict)
+            parsed_dict = parse_line(line, regx, log_dict)
 
-        try:
             if line_count % 10 == 0:
                 print_result(parsed_dict)
-        except KeyboardInterrupt:
-            print_result(parsed_dict)
+
+    except KeyboardInterrupt:
+        print_result(parsed_dict)
 
 
 if __name__ == '__main__':

@@ -6,9 +6,9 @@ import sys
 
 def create_log_dict():
     ''' create an initial dict of file size and status codes '''
-    status_codes: list = [200, 301, 400, 401, 403, 404, 405, 500]
+    status_codes = [200, 301, 400, 401, 403, 404, 405, 500]
 
-    log_dict: dict = {
+    log_dict = {
         'file_size': 0,
         'status_codes': {str(code): 0 for code in status_codes}
     }

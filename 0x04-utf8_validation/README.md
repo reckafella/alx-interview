@@ -1,13 +1,16 @@
 # **0x04. UTF-8 Validation**
 
 ## **Resources**
+
 ### **Read or watch:**
 
 * **[UTF-8](https://en.wikipedia.org/wiki/UTF-8)**
 * **[Characters, Symbols, and the Unicode Miracle](https://www.youtube.com/watch?v=MijmeoH9LT4)**
 
 ## **Requirements**
+
 ### **General**
+
 * Allowed editors: vi, vim, emacs
 * All your files will be interpreted/compiled on Ubuntu 20.04 LTS using python3 (version 3.4.3)
 * All your files should end with a new line
@@ -17,7 +20,8 @@
 * All your files must be executable
 
 ## **Tasks**
-0. UTF-8 Validation
+
+1. UTF-8 Validation
 
 A method that determines if a given data set represents a valid UTF-8 encoding.
 

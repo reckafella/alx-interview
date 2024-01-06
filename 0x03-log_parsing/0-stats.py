@@ -35,7 +35,7 @@ def print_result(log_dict):
     ''' handles the printing of file_size and status_codes '''
     print('File size: {}'.format(log_dict['file_size']))
 
-    sorted_codes = sorted(log_dict['status_codes'])
+    sorted_codes = sorted(log_dict['status_codes'].keys())
 
     for status_code in sorted_codes:
         if log_dict['status_codes'][status_code]:

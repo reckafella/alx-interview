@@ -12,9 +12,8 @@ def validUTF8(data):
         except ValueError:
             return False
 
-        decoded_data = byte_data.decode('UTF-8')
-        encoded_data = decoded_data.encode('UTF-8')
+        encoded_data = byte_data.decode('UTF-8').encode('UTF-8')
 
         return encoded_data == byte_data
-    except UnicodeDecodeError:
+    except UnicodeError:
         return False

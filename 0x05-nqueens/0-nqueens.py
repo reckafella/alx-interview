@@ -19,7 +19,7 @@ def handle_input():
     return n
 
 
-def is_safe(board: list, row: int, column: int, n: int) -> bool:
+def is_safe(board, row, column, n):
     '''
     check if there is a queen in the same row, column or diagonal
     '''
@@ -34,43 +34,44 @@ def is_safe(board: list, row: int, column: int, n: int) -> bool:
             return False
 
     # lower diagonal
-    for i, j in zip(range(row, n, -1), range(column, -1, -1)):
+    for i, j in zip(range(row, n, 1), range(column, -1, -1)):
         if board[i][j] == 1:
             return False
 
     return True
 
 
-def solve_board_helper(board: list, column, n) -> bool:
-    ''' return True if all queens are placed '''
+def solve_board_helper(board, column, n):
+    ''' return solutions after all queens are placed '''
+    solutions = []
+
     if column >= n:
-        return True
+        current_solution = []
+        for i in range(n):
+            for j in range(n):
+                if board[i][j] == 1:
+                    current_solution.append([i, j])
+        solutions.append(current_solution)
+        return solutions
 
     for i in range(n):
         if is_safe(board, i, column, n):
             board[i][column] = 1
 
-            if solve_board_helper(board, column + 1, n):
-                return True
-            # backtrack if placing the queen in the current position does not
-            #   lead to a solution
+            solutions += solve_board_helper(board, column + 1, n)
+
+            # backtrack
             board[i][column] = 0
-    return False
+    return solutions
 
 
-def solve_nqueens(n: int) -> list:
+def solve_nqueens(n):
     ''' return all possible solutions '''
     board = [[0] * n for _ in range(n)]
-    solution = []
 
-    if solve_board_helper(board, 0, n):
-        for i in range(n):
-            for j in range(n):
-                if board[i][j] == 1:
-                    solution.append([i, j])
-    print(solution)
+    for solution in sorted(solve_board_helper(board, 0, n)):
+        print(solution)
 
 
 if __name__ == '__main__':
-    n = handle_input()
-    solve_nqueens(n)
+    solve_nqueens(handle_input())

@@ -3,33 +3,27 @@ const request = require('request');
 
 const args = process.argv.slice(2);
 const id = parseInt(args[0]);
+const URL = `https://swapi-api.hbtn.io/api/films/${id}`;
 
-function returnCharacters () {
-  return new Promise((resolve, reject) => {
-    const url = `https://swapi-api.alx-tools.com/api/films/${id}`;
+function printCharacterNames (characters, index) {
+  if (index >= characters.length) {
+    return;
+  }
 
-    request(url, (_err, _response, body) => {
-      if (_err) {
-        reject(_err);
-      }
-      const jsonData = JSON.parse(body);
-      try {
-        resolve(jsonData.characters);
-      } catch (err) {
-        reject(err);
-      }
-    });
+  request(characters[index], (_err, _response, body) => {
+    if (_err) {
+      console.log(_err);
+    }
+    const jsonData = JSON.parse(body);
+    console.log(jsonData.name);
+    printCharacterNames(characters, index + 1);
   });
 }
 
-returnCharacters().then((characters) => {
-  for (const character of characters) {
-    request(character, (_err, _response, body) => {
-      if (_err) {
-        console.log(_err);
-      }
-      const jsonData = JSON.parse(body);
-      console.log(jsonData.name);
-    });
+request(URL, (_err, _response, body) => {
+  if (_err) {
+    console.log(_err);
   }
+  const jsonData = JSON.parse(body);
+  printCharacterNames(jsonData.characters, 0);
 });

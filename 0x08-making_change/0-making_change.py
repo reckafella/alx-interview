@@ -12,7 +12,7 @@ def makeChange(coins: list, total: int) -> int:
         return 0
     if not coins:
         return -1
-    # coins.sort(reverse=True)
+    coins.sort(reverse=True)
 
     min_coins = [float('Inf')] * (total + 1)
     min_coins[0] = 0

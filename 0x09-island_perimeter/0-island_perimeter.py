@@ -8,17 +8,16 @@ def island_perimeter(grid):
     '''
     function that returns the perimeter of the island described in grid
     '''
-    ones = 0
-    if not isinstance(grid, list):
-        return 0
-    for i in range(0, len(grid)):
-        for j in range(len(grid[i])):
-            if not grid[i][j] == 0 or not grid[i][j] == 1:
-                return 0
-            if grid[i][j] == 0:
-                continue
+    perimeter = 0
+    rows = len(grid)
+    cols = len(grid[0]) if rows else 0
+    
+    for i in range(rows):
+        for j in range(cols):
             if grid[i][j] == 1:
-                if grid[i-1][j] == 1 and grid[i][j+1] == 1:
-                    ones += 1
-                ones += grid[i][j]
-    return (ones * 2)
+                perimeter += 4
+                if i > 0 and grid[i - 1][j] == 1:
+                    perimeter -= 2
+                if j > 0 and grid[i][j - 1] == 1:
+                    perimeter -= 2
+    return perimeter
